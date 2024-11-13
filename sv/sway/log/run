@@ -1,0 +1,20 @@
+#!/bin/sh
+# This one's unusual because you get all the output of every user-level
+# program started with sway as well
+
+# uniq(1) just won't quite cut it
+count=0 prev_line= prev_time=
+# FIXME: Doesn't handle long sway runtimes
+while read -r REPLY; do
+	cur_line=${REPLY#[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9] }
+	if test "$cur_line" = "$prev_line"; then
+		: $(( count += 1 ))
+		prev_time=`date +%FT%T.%5N` # Should this be UTC?
+	else
+		if test "$count" -ne 0; then
+			echo "$count repeated lines suppressed, last at $prev_time"
+			count=0 prev_line= prev_time=
+		fi
+		echo "$REPLY"
+	fi
+done | vlogger -t sway -p user

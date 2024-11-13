@@ -1,0 +1,10 @@
+#!/bin/sh
+exec 2>&1
+
+# get $addr
+. ./conf
+
+# How about using -a to set a fixed socket location and avoid having to
+# find out the socket address, as well as having multiple instances hanging
+# around?
+exec ssh-agent -a "$addr" -t 3h -D

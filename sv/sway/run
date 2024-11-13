@@ -1,0 +1,14 @@
+#!/bin/sh
+# if we've gotten this far, dbus should have been started already. What about
+# dbus socket activation, does that really work? Apparently not, no.
+# dbus-run-session(1) works, but isn't there a proper way to do this?
+#
+# We need to back-export WAYLAND_DISPLAY -- how about
+#	swaymsg exec 'echo $WAYLAND_DISPLAY'
+# to where? A file like a pidfile?
+
+set -e
+exec 2>&1
+#sv check dbus-session
+cd
+exec sway

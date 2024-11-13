@@ -1,0 +1,6 @@
+#!/bin/sh
+# This has neither the dependencies of the runit-user-services pipewire, since
+# wireplumber and pipewire-pulse are handled by /etc/pipewire/pipewire.conf.d,
+# nor the setup of /usr/share/examples/sv/pipewire/, since it is run as user
+# already anyway
+exec pipewire 2>&1
