@@ -11,6 +11,6 @@
 exec 2>&1
 sv start dbus-session # Get dbus-session if we can, like dinit(8) <waits-for>
 set -efu
-. ../conf.sh
+. "$SVDIR"/../conf.sh
 
 exec pipewire

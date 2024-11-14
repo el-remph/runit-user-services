@@ -1,2 +1,5 @@
 #!/bin/sh
-exec ssh-agent -a "$XDG_RUNTIME_DIR/ssh-agent" -t 3h -D 2>&1
+exec 2>&1
+set -efu
+. "$SVDIR"/../conf.sh
+exec ssh-agent -a "$ssh_auth_sock" -t 3h -D
