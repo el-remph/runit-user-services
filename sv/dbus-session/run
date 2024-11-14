@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+. ../conf.sh # for SSH_AGENT, for anything that dbus may start
+exec dbus-daemon --session --nofork --nopidfile --syslog-only --address=unix:path="$XDG_RUNTIME_DIR"/bus

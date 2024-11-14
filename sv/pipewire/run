@@ -3,4 +3,14 @@
 # wireplumber and pipewire-pulse are handled by /etc/pipewire/pipewire.conf.d,
 # nor the setup of /usr/share/examples/sv/pipewire/, since it is run as user
 # already anyway
-exec pipewire 2>&1
+
+# FIXME: handling via /etc/pipewire/pipewire.conf.d precludes a clean exit
+# and pipewire-pulse instead must be manually killed or there will be
+# orphans galore
+
+exec 2>&1
+sv start dbus-session # Get dbus-session if we can, like dinit(8) <waits-for>
+set -efu
+. ../conf.sh
+
+exec pipewire

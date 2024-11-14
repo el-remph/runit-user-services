@@ -1,2 +1,0 @@
-# Here's an idea -- why not use a service-local symlink instead?
-addr=$XDG_RUNTIME_DIR/ssh-agent
