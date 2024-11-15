@@ -13,8 +13,9 @@ while read -r REPLY; do
 	else
 		if test "$count" -ne 0; then
 			echo "$count repeated lines suppressed, last at $prev_time"
-			count=0 prev_line= prev_time=
+			count=0 prev_time=
 		fi
+		prev_line=$cur_line
 		echo "$REPLY"
 	fi
 done | vlogger -t sway -p user
