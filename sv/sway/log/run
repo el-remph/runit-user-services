@@ -2,20 +2,35 @@
 # This one's unusual because you get all the output of every user-level
 # program started with sway as well
 
+set -f
+
 # uniq(1) just won't quite cut it
 count=0 prev_line= prev_time=
-# FIXME: Doesn't handle long sway runtimes
 while read -r REPLY; do
-	cur_line=${REPLY#[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9] }
-	if test "$cur_line" = "$prev_line"; then
+
+	set -- $REPLY # Field-split
+	# Remove timestamp
+	case $1 in
+		# Noop if contains non-timestamp characters, if more than
+		# one decimal point is used, or if the field begins or ends
+		# with a non-numeric character
+		[!0-9:.]|*.*.*|[!0-9]*|*[!0-9])	;;
+		# Also, must contain at least some punctuation to be considered a timestamp
+		*[.:]*)	shift	;;
+	esac
+
+	if test "$*" = "$prev_line"; then
 		: $(( count += 1 ))
-		prev_time=`date +%FT%T.%5N` # Should this be UTC?
+		prev_time=`date +'%FT%T.%5N'` # Should this be UTC?
 	else
 		if test "$count" -ne 0; then
-			echo "$count repeated lines suppressed, last at $prev_time"
+			plural=
+			test "$count" -eq 1 || plural=s
+			echo "$count repeated line$plural suppressed, last at $prev_time"
 			count=0 prev_time=
 		fi
-		prev_line=$cur_line
 		echo "$REPLY"
+		prev_line=$*
 	fi
+
 done | vlogger -t sway -p user
