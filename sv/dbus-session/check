@@ -1,0 +1,5 @@
+#!/bin/sh
+# See the runit-void scripts
+set -efu
+. "$SVDIR"/../conf.sh # DBUS_SESSION_BUS_ADDRESS, although it shouldn't be necessary
+exec dbus-send --session / org.freedesktop.DBus.Peer.Ping

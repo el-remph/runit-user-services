@@ -1,2 +1,1 @@
-#!/bin/sh
-exec vlogger -t pipewire -p daemon
+/usr/bin/vlogger

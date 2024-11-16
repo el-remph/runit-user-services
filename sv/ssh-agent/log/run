@@ -1,2 +1,1 @@
-#!/bin/sh
-exec vlogger -t ssh-agent -p daemon.warning
+/usr/bin/vlogger

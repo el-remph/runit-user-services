@@ -1,8 +1,1 @@
-#!/bin/sh
-
-exec 2>&1
-set -efu
-sv start pipewire # Hard depend on pipewire
-. "$SVDIR"/../conf.sh # dbus session address
-
-exec pipewire-pulse
+../../util/pipewire-minion.sh
