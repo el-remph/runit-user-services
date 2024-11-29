@@ -1,0 +1,5 @@
+#!/bin/sh
+swaypid=$(cat "$SVDIR"/sway/supervise/pid)
+export SWAYSOCK=$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$swaypid.sock
+# `&&' is used here because swaymsg messes with `;'
+swaymsg exec -- umask a-w '&&' set \| sed -En "'/^((I3|SWAY)SOCK|(WAYLAND_)?DISPLAY|XCURSOR_(SIZE|THEME)|XDG_SESSION_TYPE)=/s/^/export /p'" ">\$XDG_RUNTIME_DIR/swayenv.$swaypid"

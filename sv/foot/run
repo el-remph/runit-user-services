@@ -2,5 +2,6 @@
 exec 2>&1
 set -efu
 . "$SVDIR"/../conf.sh
-. "$SVDIR"/../util/swayenv.sh
+sv check wayland
+. "$XDG_RUNTIME_DIR"/swayenv.$(cat "$SVDIR"/sway/supervise/pid)
 exec foot --server >&- # foot does its own logging to syslog
