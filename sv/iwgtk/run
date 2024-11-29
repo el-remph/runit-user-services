@@ -1,0 +1,6 @@
+#!/bin/sh
+exec 2>&1
+set -efu
+. "$SVDIR"/../conf.sh
+. "$SVDIR"/../util/swayenv.sh
+exec iwgtk -i

@@ -1,0 +1,3 @@
+#!/bin/sh
+# Lot of empty lines coming from iwgtk(1)
+exec sed -nu /./p 2>&1 | vlogger -t iwgtk -p daemon.info # debug?
